@@ -2,13 +2,20 @@ import requests
 from bs4 import BeautifulSoup
 
 from src.utils.logger_setup import setup_logger
-from src.utils.file_utils import save_to_text
+from src.utils.file_utils import save_to_csv, save_to_text
 
 logger = setup_logger(log_file='ei_spb_parser.log')
 
 def parse_ei_spb():
     try:
-        for i in range(1, 577):
+        url = 'https://ei.spb.ru/brands'
+        response = requests.get(url)
+        html = response.text
+        soup = BeautifulSoup(html, 'lxml')
+        
+        page_count = int(soup.find_all('a', class_='page-link')[-2].text)
+        
+        for i in range(1, page_count):
             url = f'https://ei.spb.ru/brands?page={i}'
             response = requests.get(url)
             logger.debug(f"Статус-код страницы {i}: {response.status_code}")
@@ -40,7 +47,7 @@ def parse_ei_spb():
                             product_name = element_title.get_text(strip=True) if element_title else None
 
                             logger.info(f"{brand_name} | {product_name}")
-                            save_to_text(brand_name, product_name, 'ei_spb')
+                            save_to_csv(brand_name, product_name, 'ei_spb')
 
                     else:
                         logger.warning(f"Не удалось получить данные со страницы бренда: {ref_label}, статус-код: {response.status_code}")
@@ -50,6 +57,3 @@ def parse_ei_spb():
 
     except Exception as e:
         logger.exception(f"Ошибка во время парсинга: {e}")
-
-# if __name__ == "__main__":
-#     parse_ei_spb()

@@ -3,7 +3,7 @@ import asyncio
 from bs4 import BeautifulSoup
 
 from src.utils.logger_setup import setup_logger
-from src.utils.file_utils import save_to_text
+from src.utils.file_utils import save_to_csv
 
 logger = setup_logger(log_file='dalkos_parser.log')
 
@@ -56,10 +56,7 @@ async def parse_dalkos():
                             product_name = product.find('a').text.strip()
                             logger.info(f'{brand_name} | {product_name}')
                             
-                            save_to_text(brand_name, product_name, 'dalkos')
+                            save_to_csv(brand_name, product_name, 'dalkos')
                         
     except aiohttp.ClientError as e:
         logger.error(f'Ошибка при запросе основной страницы {url}: {e}')
-
-# if __name__ == '__main__':
-#     asyncio.run(parse_dalkos())

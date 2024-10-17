@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from src.utils.logger_setup import setup_logger
-from src.utils.file_utils import save_to_text
+from src.utils.file_utils import save_to_csv
 
 logger = setup_logger(log_file='prmth_parser.log')
 
@@ -18,7 +18,6 @@ def parse_prmth():
         html = response.text
         soup = BeautifulSoup(html, 'lxml')
 
-        # Находим все ссылки на бренды
         links = soup.find_all('div', class_='brands_item')
 
         for link in links:
@@ -26,7 +25,6 @@ def parse_prmth():
                 ref_label = 'https://prmth.ru/' + link.find('a')['href']
                 # logger.debug(f"Найдена ссылка на бренд: {ref_label}")
 
-                # Запрос к странице бренда
                 response = requests.get(ref_label)
                 response.raise_for_status()
 
@@ -35,7 +33,6 @@ def parse_prmth():
                 html = response.text
                 soup = BeautifulSoup(html, 'lxml')
 
-                # Находим все товары на странице бренда
                 details = soup.find_all('div', class_='products-col')
 
                 for detail in details:
@@ -51,13 +48,10 @@ def parse_prmth():
                         product = None
 
                     logger.info(f"{brand} | {product}")
-                    save_to_text(brand, product, 'prmth')
+                    save_to_csv(brand, product, 'prmth')
 
             except requests.RequestException as e:
                 logger.error(f"Ошибка при запросе страницы бренда {ref_label}: {e}")
 
     except requests.RequestException as e:
         logger.error(f"Ошибка при запросе основной страницы {url}: {e}")
-
-# if __name__ == '__main__':
-#     parse_prmth()
