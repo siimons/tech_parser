@@ -1,8 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-from src.utils.logger_setup import setup_logger
-from src.utils.file_utils import save_to_csv, save_to_text
+from src.utils.logging.logger_setup import setup_logger
+from src.utils.file_handling.file_saver import save_to_csv
 
 logger = setup_logger(log_file='ei_spb_parser.log')
 

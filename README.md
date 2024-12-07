@@ -18,10 +18,10 @@ parse_appliances/
 │   ├── pzip_parser.log
 │   └── parser.log
 ├── output/
-│   ├── dalkos.txt
-│   ├── ei_spb.txt
-│   ├── prmth.txt
-│   └── pzip.txt
+│   ├── dalkos.csv
+│   ├── ei_spb.csv
+│   ├── prmth.csv
+│   └── pzip.csv
 ├── src/
 │   ├── __init__.py
 │   ├── parsers/
@@ -34,10 +34,18 @@ parse_appliances/
 │   │   └── pzip_parser.py
 │   └── utils/
 │       ├── __init__.py
-│       ├── file_utils.py
-│       ├── logger_setup.py
-│       ├── proxy_picker.py
-│       └── user_agent.py
+│       ├── file_handling/
+│       │   ├── __init__.py
+│       │   └── file_saver.py
+│       ├── logging/
+│       │   ├── __init__.py
+│       │   └── logger_setup.py
+│       └── requests/
+│           ├── __init__.py
+│           ├── proxy_picker.py
+│           ├── request_handler.py
+│           └── user_agent.py
+├── .gitignore
 ├── main.py
 ├── README.md
 └── requirements.txt
@@ -52,18 +60,33 @@ parse_appliances/
 ## Установка
 
 1. Клонируйте репозиторий:
-   ```bash
-   git clone <URL_репозитория>
-   cd parse_appliances
 
-   ```
-2. Установите зависимости:
-    ```bash
-    pip install -r requirements.txt
- 
-    ```
-3. Запустите программу:
-    ```bash
-    python3 main.py
+```bash
+git clone https://github.com/siimons/parse_appliances
+cd parse_appliances
 
-    ```
+```
+
+2. Создайте и активируйте виртуальное окружение
+
+```bash
+python -m venv venv
+
+source venv/bin/activate      # Для Linux/MacOS
+venv\Scripts\activate         # Для Windows
+
+```
+
+3. Установите зависимости:
+
+```bash
+pip install -r requirements.txt
+
+```
+
+4. Запустите программу:
+
+```bash
+python3 main.py
+
+```
