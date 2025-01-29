@@ -1,6 +1,6 @@
 # Парсер для сайтов с информацией о бытовой технике
 
-Этот проект предназначен для парсинга данных с различных веб-сайтов, предоставляющих информацию о бытовой технике. В частности, программа собирает данные с следующих ресурсов:
+Этот проект предназначен для парсинга данных с различных веб-сайтов, предоставляющих информацию о бытовой технике. В частности, программа собирает данные со следующих ресурсов:
 
 - [ei.spb.ru/brands](http://ei,spb.ru/brands)
 - [dalkos.ru/manufacturers](http://dalkos.ru/manufacturers)
@@ -10,7 +10,7 @@
 ## Структура проекта
 
 ```
-parse_appliances/
+tech_parser/
 ├── logs/
 │   ├── dalkos_parser.log
 │   ├── ei_spb_parser.log
@@ -62,8 +62,8 @@ parse_appliances/
 1. Клонируйте репозиторий:
 
 ```bash
-git clone https://github.com/siimons/parse_appliances
-cd parse_appliances
+git clone https://github.com/siimons/tech_parser
+cd tech_parser
 
 ```
 
